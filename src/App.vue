@@ -1,28 +1,52 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="app">
+    <aside class="app__filter">
+      <tickets-filter ></tickets-filter>
+    </aside>
+    <main class="app__tickets">
+      <ticket-item 
+      v-for="ticket in tickets" 
+      :key="ticket.arrival_time"
+      :ticket="ticket"
+      >
+      </ticket-item>
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import TicketsFilter from '@/components/TicketsFilter'
+import TicketItem from '@/components/TicketItem'
+import tickets from '@/assets/tickets.json'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
+    TicketsFilter,
+    TicketItem
   },
+  data() {
+    return {
+      tickets: tickets.tickets
+    }
+  }
 };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.app {
   margin-top: 60px;
+  width: 800px;
+  margin: 0 auto;
+  display: flex;
+
+  &__filter {
+    width: 200px;
+  }
+
+  &__tickets {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
