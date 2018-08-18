@@ -8,6 +8,7 @@
       v-for="ticket in tickets" 
       :key="ticket.arrival_time"
       :ticket="ticket"
+      :currency="currency"
       >
       </ticket-item>
     </main>
@@ -17,7 +18,7 @@
 <script>
 import TicketsFilter from '@/components/TicketsFilter'
 import TicketItem from '@/components/TicketItem'
-import tickets from '@/assets/tickets.json'
+import json from '@/assets/tickets.json'
 
 export default {
   name: 'app',
@@ -27,8 +28,12 @@ export default {
   },
   data() {
     return {
-      tickets: tickets.tickets
+      tickets: null,
+      currency: 'rub'
     }
+  },
+  created() {
+    this.tickets = JSON.parse(JSON.stringify(json.tickets))
   }
 };
 </script>

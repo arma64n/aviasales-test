@@ -1,8 +1,8 @@
 <template>
   <div class="ticket">
     <div class="ticket__buy">
-      <img class="ticket__carrier" src="@/assets/S7.png">
-      <button type="button" class="ticket__button">Купить<br>за {{ticket.price}}₽</button>
+      <img class="ticket__carrier" :src="`/airlines/${ticket.carrier}.png`">
+      <button type="button" class="ticket__button">Купить<br>за {{ticket.price}}{{currentCurrencySign}}</button>
     </div>
     <div class="ticket__info info">
       <div class="info__origin">
@@ -33,6 +33,24 @@ export default {
     ticket: {
       type: Object,
       required: true
+    },
+    currency: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    currentCurrencySign() {
+      switch(this.currency) {
+        case 'rub':
+          return '₽';
+        case 'usd':
+          return '$';
+        case 'eur':
+          return '€';
+        default:
+          return '-'
+      }
     }
   }
 }
