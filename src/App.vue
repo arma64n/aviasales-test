@@ -1,11 +1,11 @@
 <template>
   <div id="app" class="app">
     <aside class="app__filter">
-      <tickets-filter ></tickets-filter>
+      <filter-currency v-model="currency"></filter-currency>
     </aside>
     <main class="app__tickets">
       <ticket-item 
-      v-for="ticket in tickets" 
+      v-for="ticket in filteredTickets" 
       :key="ticket.arrival_time"
       :ticket="ticket"
       :currency="currency"
@@ -16,20 +16,25 @@
 </template>
 
 <script>
-import TicketsFilter from '@/components/TicketsFilter'
+import FilterCurrency from '@/components/FilterCurrency'
 import TicketItem from '@/components/TicketItem'
 import json from '@/assets/tickets.json'
 
 export default {
   name: 'app',
   components: {
-    TicketsFilter,
+    FilterCurrency,
     TicketItem
+  },
+  computed: {
+    filteredTickets () {
+      return this.tickets.sort((a, b) => a.price - b.price)
+    }
   },
   data() {
     return {
       tickets: null,
-      currency: 'rub'
+      currency: 'RUB'
     }
   },
   created() {
@@ -41,12 +46,20 @@ export default {
 <style lang="scss">
 .app {
   margin-top: 60px;
-  width: 800px;
   margin: 0 auto;
   display: flex;
+  justify-content: center;
 
   &__filter {
-    width: 200px;
+    width: 230px;
+    height: fit-content;
+    background: #fff;
+    padding: 20px 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px 0 rgba(91, 137, 164, 0.25);
+    margin-right: 20px;
+    display: flex;
+    box-sizing: border-box;
   }
 
   &__tickets {

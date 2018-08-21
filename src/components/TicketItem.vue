@@ -2,7 +2,7 @@
   <div class="ticket">
     <div class="ticket__buy">
       <img class="ticket__carrier" :src="`/airlines/${ticket.carrier}.png`">
-      <button type="button" class="ticket__button">Купить<br>за {{ticket.price}}{{currentCurrencySign}}</button>
+      <button type="button" class="ticket__button">Купить<br>за {{(ticket.price * currentRate).toFixed()}}{{currentCurrencySign}}</button>
     </div>
     <div class="ticket__info info">
       <div class="info__origin">
@@ -42,14 +42,26 @@ export default {
   computed: {
     currentCurrencySign() {
       switch(this.currency) {
-        case 'rub':
+        case 'RUB':
           return '₽';
-        case 'usd':
+        case 'USD':
           return '$';
-        case 'eur':
+        case 'EUR':
           return '€';
         default:
           return '-'
+      }
+    },
+    currentRate() {
+      switch(this.currency) {
+        case 'RUB':
+          return 1;
+        case 'USD':
+          return 0.015;
+        case 'EUR':
+          return 0.013;
+        default:
+          return 1
       }
     }
   }
